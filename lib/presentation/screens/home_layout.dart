@@ -1,60 +1,50 @@
 import 'package:flutter/material.dart';
+import 'explore_tab.dart';
 
 class HomeLayout extends StatefulWidget {
-  const HomeLayout({super.key});
+  const HomeLayout({Key? key}) : super(key: key);
 
   @override
   State<HomeLayout> createState() => _HomeLayoutState();
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
-  int currentIndex = 0;
+  int _currentIndex = 0;
 
-  final List<Widget> pages = const [
-    Center(child: Text('Home')),
-    Center(child: Text('Search')),
-    Center(child: Text('Browse')),
-    Center(child: Text('Profile')),
+  final List<Widget> _screens = [
+    const ExploreTab(),
+    const Center(child: Text("Search Tab", style: TextStyle(color: Colors.white))),
+    const Center(child: Text("Browse Tab", style: TextStyle(color: Colors.white))),
+    const Center(child: Text("Profile Tab", style: TextStyle(color: Colors.white))),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[currentIndex],
-
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-
-        type: BottomNavigationBarType.fixed,
-
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'Home',
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Container(
+          width: 430,
+          height: 932,
+          decoration: BoxDecoration(
+            color: const Color(0xFF121212),
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                blurRadius: 20,
+                spreadRadius: 5,
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search_outlined),
-            activeIcon: Icon(Icons.search),
-            label: 'Search',
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: Scaffold(
+              backgroundColor: const Color(0xFF121212),
+              body: _screens[_currentIndex],
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.explore_outlined),
-            activeIcon: Icon(Icons.explore),
-            label: 'Browse',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+        ),
       ),
     );
   }
