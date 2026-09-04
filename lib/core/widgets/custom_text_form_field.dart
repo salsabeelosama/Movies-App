@@ -37,7 +37,7 @@ class CustomTextFormField extends StatelessWidget {
               prefixIcon: prefixIcon != null
                   ? Padding(
                 padding: const EdgeInsets.only(left: 19, right: 4),
-                child: Icon(prefixIcon, color: Colors.grey),
+                child: Icon(prefixIcon, color: Colors.white),
               )
                   : null,
               prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
