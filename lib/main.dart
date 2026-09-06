@@ -1,49 +1,42 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app/core/constants/app_colors.dart';
-import 'package:movies_app/features/Auth/view/login_screen.dart';
-import 'package:movies_app/features/Profile/view/profile_screen.dart';
-import 'package:movies_app/features/splash/view/splash_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'theme/app_theme.dart';
+import 'pages/root_shell.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
   runApp(
     EasyLocalization(
-      supportedLocales: [Locale('en', 'US'), Locale('ar')],
+      supportedLocales: const [Locale('en')],
       path: 'assets/translation',
-      fallbackLocale: Locale('en', 'US'),
-      child: MyApp(),
+      fallbackLocale: const Locale('en'),
+      child: const MoviesApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MoviesApp extends StatelessWidget {
+  const MoviesApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Design size matches the reference mockups (390x844 ~ standard phone).
     return ScreenUtilInit(
-      designSize: const Size(430, 932),
+      designSize: const Size(390, 844),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
-          localizationsDelegates:
-              context.localizationDelegates,
-          supportedLocales:
-              context.supportedLocales,
-          locale:
-              context.locale,
+          title: 'Movies App',
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            fontFamily: 'Roboto',
-            scaffoldBackgroundColor: AppColors.backgroundColor,
-          ),
-          home: ProfileScreen(),
+          theme: AppTheme.dark,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          home: const RootShell(),
         );
       },
     );
