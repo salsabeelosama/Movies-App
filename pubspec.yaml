@@ -78,10 +78,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-     - family: Roboto
-       fonts:
-        - asset: assets/fonts/Roboto.ttf
+  # NOTE: commented out — no Roboto.ttf file was provided. Add the real
+  # font file to assets/fonts/ and uncomment this to use it; Material's
+  # default font is visually very close to Roboto in the meantime.
+  # fonts:
+  #    - family: Roboto
+  #      fonts:
+  #       - asset: assets/fonts/Roboto.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
