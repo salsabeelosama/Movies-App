@@ -7,6 +7,7 @@ class CustomButton extends StatelessWidget {
   final IconData? icon;
   final String? imageIcon;
   final double fontSize;
+  final bool isLoading;
 
   const CustomButton({
     super.key,
@@ -15,6 +16,7 @@ class CustomButton extends StatelessWidget {
     this.icon,
     this.imageIcon,
     this.fontSize = 16,
+    this.isLoading = false,
   });
 
   @override
@@ -26,12 +28,22 @@ class CustomButton extends StatelessWidget {
           width: 392,
           height: 56,
           child: ElevatedButton(
-            onPressed: onPressed,
+            onPressed: isLoading ? null : onPressed,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.mainColor,
+              disabledBackgroundColor: AppColors.mainColor,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),
-            child: Row(
+            child: isLoading
+                ? const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(
+                strokeWidth: 2.5,
+                color: Colors.black,
+              ),
+            )
+                : Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (imageIcon != null) ...[
