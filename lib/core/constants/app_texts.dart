@@ -22,4 +22,11 @@ class AppTexts {
   static const String resetPassword = "reset_password";
   static const String deleteAccount = "delete_account";
   static const String updateData = "update_data";
+   static const String nameRequired = 'name_required';
+  static const String emailRequired = 'email_required';
+  static const String validEmail = 'valid_email';
+  static const String passwordRequired = 'password_required';
+  static const String passwordMinLength = 'password_min_length';
+  static const String passwordsNotMatch = 'passwords_not_match';
+  static const String phoneRequired = 'phone_required';
 }

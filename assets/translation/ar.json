@@ -21,7 +21,14 @@
   "pick_avatar":"اختار افاتار",
   "reset_password": "إعادة تعيين كلمة المرور",
 "delete_account": "حذف الحساب",
-"update_data": "تحديث البيانات"
+"update_data": "تحديث البيانات",
+"name_required": "الاسم مطلوب",
+  "email_required": "البريد الإلكتروني مطلوب",
+  "valid_email": "أدخل بريدًا إلكترونيًا صحيحًا",
+  "password_required": "كلمة المرور مطلوبة",
+  "password_min_length": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+  "passwords_not_match": "كلمتا المرور غير متطابقتين",
+  "phone_required": "رقم الهاتف مطلوب"
 
 
 }
