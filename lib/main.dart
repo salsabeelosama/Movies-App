@@ -7,6 +7,7 @@ import 'package:movies_app/features/Auth/view/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:movies_app/features/Auth/view/register_screen.dart';
 import 'package:movies_app/features/Profile/view/profile_screen.dart';
+import 'package:movies_app/features/edit_profile/view/editProfile_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -45,11 +46,13 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Roboto',
             scaffoldBackgroundColor: AppColors.backgroundColor,
           ),
-          initialRoute: AppRoutes.register,
+          initialRoute: AppRoutes.editProfile,
           routes: {
             AppRoutes.login: (context) => const LoginScreen(),
             AppRoutes.register: (context) => RegisterScreen(),
             AppRoutes.profile: (context) => const ProfileScreen(),
+            AppRoutes.editProfile: (context) =>  EditProfileScreen(),
+            
           },
         );
       },

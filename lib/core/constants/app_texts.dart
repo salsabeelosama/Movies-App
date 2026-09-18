@@ -18,5 +18,8 @@ class AppTexts {
   static const String phoneNumber = "phone_number";
   static const String createAccount = "create_account";
   static const String havAcc = "hav_acc";
-
+  static const String pickAvatar = "pick_avatar";
+  static const String resetPassword = "reset_password";
+  static const String deleteAccount = "delete_account";
+  static const String updateData = "update_data";
 }

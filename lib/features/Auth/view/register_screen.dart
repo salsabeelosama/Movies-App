@@ -13,7 +13,7 @@ import 'package:movies_app/core/constants/app_texts.dart';
 import 'package:movies_app/core/widgets/custom_button.dart';
 import 'package:movies_app/core/widgets/custom_text_form_field.dart';
 import 'package:movies_app/core/widgets/language_toggle.dart';
-import 'package:movies_app/features/Auth/register_cubit/register_cubit.dart';
+import 'package:movies_app/features/Auth/controller/register_cubit/register_cubit.dart';
 import 'package:movies_app/features/Auth/repository/auth_repository.dart';
 
 class RegisterScreen extends StatefulWidget {

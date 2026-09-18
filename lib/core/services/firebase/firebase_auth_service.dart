@@ -52,4 +52,14 @@ class FirebaseAuthService {
   Future<void> sendPasswordResetEmail({required String email}) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
+
+  Future<void> deleteAccount() async {
+  final user = _firebaseAuth.currentUser;
+
+  if (user == null) {
+    throw Exception('No user is logged in');
+  }
+
+  await user.delete();
+}
 }
