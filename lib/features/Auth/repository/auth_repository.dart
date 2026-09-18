@@ -118,4 +118,38 @@ class AuthRepository {
   return doc.data()!;
 }
 
+Future<void> updateUserProfile({
+  required String name,
+  required String phone,
+  required String avatar,
+}) async {
+  final user = _authService.currentUser;
+
+  if (user == null) {
+    throw Exception('No user is logged in');
+  }
+
+  await _firestore.collection('users').doc(user.uid).update({
+    'name': name,
+    'phone': phone,
+    'avatar': avatar,
+  });
+}
+
+Future<void> deleteAccount() async {
+  final user = _authService.currentUser;
+
+  if (user == null) {
+    throw Exception('No user is logged in');
+  }
+
+  // Delete user data from Firestore
+  await _firestore
+      .collection('users')
+      .doc(user.uid)
+      .delete();
+
+  // Delete Firebase Authentication account
+  await _authService.deleteAccount();
+}
 }

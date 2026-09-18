@@ -13,7 +13,8 @@ import 'package:movies_app/core/constants/app_texts.dart';
 import 'package:movies_app/core/widgets/custom_button.dart';
 import 'package:movies_app/core/widgets/custom_text_form_field.dart';
 import 'package:movies_app/core/widgets/language_toggle.dart';
-import 'package:movies_app/features/Auth/register_cubit/register_cubit.dart';
+import 'package:movies_app/features/Auth/controller/register_cubit/register_cubit.dart';
+import 'package:movies_app/features/Auth/controller/register_cubit/register_state.dart';
 import 'package:movies_app/features/Auth/repository/auth_repository.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -85,208 +86,215 @@ class _RegisterScreenState extends State<RegisterScreen> {
         AuthRepository(
         ),
       ),
+      child: BlocListener<RegisterCubit, RegisterState>(
+        listener: (context, state) {
+          if (state is RegisterSuccess) {
+            Navigator.pushReplacementNamed(context, AppRoutes.profile);
+          }
+        },
         child: Builder(
-          builder: (context){
-          return Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                backgroundColor: Colors.transparent,
-                title: Text(
-                  AppTexts.register.tr(),
-                  style: TextStyle(
-                    color: AppColors.mainColor,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w400,
+            builder: (context){
+              return Scaffold(
+                appBar: AppBar(
+                  centerTitle: true,
+                  backgroundColor: Colors.transparent,
+                  title: Text(
+                    AppTexts.register.tr(),
+                    style: TextStyle(
+                      color: AppColors.mainColor,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-              ),
-          
-              body: Form(
-                key: formkey,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 150.h,
-                      child: PageView.builder(
-                        dragStartBehavior: DragStartBehavior.start,
-                        onPageChanged: (index) {
-                          setState(() {
-                            selectedAvatar = 'avatar${index + 1}';
-                          });
-                        },
-                        controller: controller,
-                        itemCount: avatars.length,
-                        itemBuilder: (context, index) {
-                          return AnimatedBuilder(
-                            animation: controller,
-                            builder: (context, child) {
-                              double scale = 0.7;
-          
-                              if (controller.hasClients &&
-                                  controller.positions.length == 1) {
-                                final page = controller.page ?? 0.0;
-          
-                                final distance = (page - index).abs();
-          
-                                scale = (1 - distance * 0.5).clamp(0.7, 1.0);
-                              }
-          
-                              return Center(
-                                child: Transform.scale(
-                                  scale: scale,
-                                  child: Image.asset(avatars[index]),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ),
-          
-                    CustomTextFormField(
-                      controller: nameController,
-                      hintText: AppTexts.name.tr(),
-                      prefixIcon: Icons.co_present,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Name is required';
-                        }
-          
-                        return null;
-                      },
-                    ),
-          
-                    CustomTextFormField(
-                      controller: emailController,
-                      hintText: AppTexts.email.tr(),
-                      prefixIcon: Icons.email_rounded,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Email is required';
-                        }
-          
-                        if (!value.contains('@')) {
-                          return 'Enter a valid email';
-                        }
-          
-                        return null;
-                      },
-                    ),
-          
-                    CustomTextFormField(
-                      controller: passController,
-                      hintText: AppTexts.password.tr(),
-                      prefixIcon: Icons.lock,
-                      isPassword: isPasswordObscured,
-                      suffix: IconButton(
-                        color: Colors.white,
-                        onPressed: togglePasswordVisibility,
-                        icon: Icon(
-                          isPasswordObscured
-                              ? Icons.visibility_off
-                              : Icons.remove_red_eye_rounded,
+
+                body: Form(
+                  key: formkey,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 150.h,
+                        child: PageView.builder(
+                          dragStartBehavior: DragStartBehavior.start,
+                          onPageChanged: (index) {
+                            setState(() {
+                              selectedAvatar = 'avatar${index + 1}';
+                            });
+                          },
+                          controller: controller,
+                          itemCount: avatars.length,
+                          itemBuilder: (context, index) {
+                            return AnimatedBuilder(
+                              animation: controller,
+                              builder: (context, child) {
+                                double scale = 0.7;
+
+                                if (controller.hasClients &&
+                                    controller.positions.length == 1) {
+                                  final page = controller.page ?? 0.0;
+
+                                  final distance = (page - index).abs();
+
+                                  scale = (1 - distance * 0.5).clamp(0.7, 1.0);
+                                }
+
+                                return Center(
+                                  child: Transform.scale(
+                                    scale: scale,
+                                    child: Image.asset(avatars[index]),
+                                  ),
+                                );
+                              },
+                            );
+                          },
                         ),
                       ),
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Password is required';
-                        }
-          
-                        if (value.length < 8) {
-                          return 'Password must be at least 8 characters';
-                        }
-          
-                        return null;
-                      },
-                    ),
-          
-                    CustomTextFormField(
-                      controller: confPassController,
-                      hintText: AppTexts.confPassword.tr(),
-                      prefixIcon: Icons.lock,
-                      isPassword: isConfirmPasswordObscured,
-                      suffix: IconButton(
-                        color: Colors.white,
-                        onPressed: toggleConfirmPasswordVisibility,
-                        icon: Icon(
-                          isConfirmPasswordObscured
-                              ? Icons.visibility_off
-                              : Icons.remove_red_eye_rounded,
-                        ),
+
+                      CustomTextFormField(
+                        controller: nameController,
+                        hintText: AppTexts.name.tr(),
+                        prefixIcon: Icons.co_present,
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Name is required';
+                          }
+
+                          return null;
+                        },
                       ),
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Password is required';
-                        }
-          
-                        if (passController.text != confPassController.text) {
-                          return 'Passwords must match';
-                        }
-          
-                        return null;
-                      },
-                    ),
-          
-                    CustomTextFormField(
-                      controller: phoneController,
-                      hintText: AppTexts.phoneNumber.tr(),
-                      prefixIcon: Icons.phone,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Phone number is required';
-                        }
-                      },
-                    ),
-          
-                    CustomButton(
-                      text: AppTexts.createAccount.tr(),
-                      onPressed: () {
-                        if (formkey.currentState!.validate()) {
-                          context.read<RegisterCubit>().register(
-                            name: nameController.text.trim(),
-                            email: emailController.text.trim(),
-                            password: passController.text,
-                            phone: phoneController.text.trim(),
-                            avatar: selectedAvatar,
-                          );
-                        }
-                      },
-                    ),
-          
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          AppTexts.havAcc.tr(),
-                          style: TextStyle(
-                            color: AppColors.whiteColor,
-                            fontSize: 16.sp,
+
+                      CustomTextFormField(
+                        controller: emailController,
+                        hintText: AppTexts.email.tr(),
+                        prefixIcon: Icons.email_rounded,
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Email is required';
+                          }
+
+                          if (!value.contains('@')) {
+                            return 'Enter a valid email';
+                          }
+
+                          return null;
+                        },
+                      ),
+
+                      CustomTextFormField(
+                        controller: passController,
+                        hintText: AppTexts.password.tr(),
+                        prefixIcon: Icons.lock,
+                        isPassword: isPasswordObscured,
+                        suffix: IconButton(
+                          color: Colors.white,
+                          onPressed: togglePasswordVisibility,
+                          icon: Icon(
+                            isPasswordObscured
+                                ? Icons.visibility_off
+                                : Icons.remove_red_eye_rounded,
                           ),
                         ),
-          
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, AppRoutes.login);
-                          },
-                          child: Text(
-                            AppTexts.login.tr(),
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Password is required';
+                          }
+
+                          if (value.length < 8) {
+                            return 'Password must be at least 8 characters';
+                          }
+
+                          return null;
+                        },
+                      ),
+
+                      CustomTextFormField(
+                        controller: confPassController,
+                        hintText: AppTexts.confPassword.tr(),
+                        prefixIcon: Icons.lock,
+                        isPassword: isConfirmPasswordObscured,
+                        suffix: IconButton(
+                          color: Colors.white,
+                          onPressed: toggleConfirmPasswordVisibility,
+                          icon: Icon(
+                            isConfirmPasswordObscured
+                                ? Icons.visibility_off
+                                : Icons.remove_red_eye_rounded,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Password is required';
+                          }
+
+                          if (passController.text != confPassController.text) {
+                            return 'Passwords must match';
+                          }
+
+                          return null;
+                        },
+                      ),
+
+                      CustomTextFormField(
+                        controller: phoneController,
+                        hintText: AppTexts.phoneNumber.tr(),
+                        prefixIcon: Icons.phone,
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Phone number is required';
+                          }
+                        },
+                      ),
+
+                      CustomButton(
+                        text: AppTexts.createAccount.tr(),
+                        onPressed: () {
+                          if (formkey.currentState!.validate()) {
+                            context.read<RegisterCubit>().register(
+                              name: nameController.text.trim(),
+                              email: emailController.text.trim(),
+                              password: passController.text,
+                              phone: phoneController.text.trim(),
+                              avatar: selectedAvatar,
+                            );
+                          }
+                        },
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            AppTexts.havAcc.tr(),
                             style: TextStyle(
-                              color: AppColors.mainColor,
-                              fontWeight: FontWeight.bold,
+                              color: AppColors.whiteColor,
                               fontSize: 16.sp,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-          
-                    LanguageToggle(),
-                  ],
+
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, AppRoutes.login);
+                            },
+                            child: Text(
+                              AppTexts.login.tr(),
+                              style: TextStyle(
+                                color: AppColors.mainColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      LanguageToggle(),
+                    ],
+                  ),
                 ),
-              ),
-            );
-  }));
-  }
-    
+              );
+            }),
+      ),
+    );
   }
 
+}

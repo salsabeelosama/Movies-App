@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/features/Auth/register_cubit/register_state.dart';
+import 'package:movies_app/features/Auth/controller/register_cubit/register_state.dart';
 import 'package:movies_app/features/Auth/repository/auth_repository.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {

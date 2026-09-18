@@ -17,7 +17,11 @@
 "name":"Name",
 "phone_number":"Phone Number",
 "create_account":"Create Account",
-"hav_acc":"Already Have Account ?"
+"hav_acc":"Already Have Account ?",
+"pick_avatar":"Pick Avatar",
+"reset_password":"Reset Password",
+"delete_account":"Delete Account",
+"update_data":"Update Data"
 
 
 }
