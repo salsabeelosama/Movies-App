@@ -7,7 +7,6 @@ class EditProfileCubit extends Cubit<EditProfileState> {
 
   EditProfileCubit(this.repository) : super(EditProfileInitial());
 
-  // Get current user data
   Future<void> getProfile() async {
     try {
       emit(EditProfileLoading());
@@ -26,7 +25,6 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     }
   }
 
-  // Update user data
   Future<void> updateProfile({
     required String name,
     required String phone,
@@ -47,15 +45,32 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     }
   }
 
-  Future<void> deleteAccount() async {
-  try {
-    emit(EditProfileUpdating());
+  Future<void> resetPassword() async {
+    try {
+      final data = await repository.getUserProfile();
+      final email = data['email'];
 
-    await repository.deleteAccount();
+      if (email == null || email.toString().isEmpty) {
+        emit(EditProfileError('User email not found.'));
+        return;
+      }
 
-    emit(EditProfileUpdated());
-  } catch (e) {
-    emit(EditProfileError(e.toString()));
+      await repository.forgetPassword(email: email);
+      emit(EditProfilePasswordResetSuccess());
+    } catch (e) {
+      emit(EditProfileError(e.toString().replaceFirst('Exception: ', '')));
+    }
   }
-}
+
+  Future<void> deleteAccount() async {
+    try {
+      emit(EditProfileUpdating());
+
+      await repository.deleteAccount();
+
+      emit(EditProfileUpdated());
+    } catch (e) {
+      emit(EditProfileError(e.toString()));
+    }
+  }
 }

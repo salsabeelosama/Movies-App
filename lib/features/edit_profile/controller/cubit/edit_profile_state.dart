@@ -20,6 +20,8 @@ class EditProfileUpdating extends EditProfileState {}
 
 class EditProfileUpdated extends EditProfileState {}
 
+class EditProfilePasswordResetSuccess extends EditProfileState {}
+
 class EditProfileError extends EditProfileState {
   final String message;
 

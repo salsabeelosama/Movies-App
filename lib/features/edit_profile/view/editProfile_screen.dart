@@ -22,7 +22,6 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController nameController = TextEditingController();
-
   TextEditingController phoneController = TextEditingController();
 
   String selectedAvatar = 'avatar1';
@@ -85,7 +84,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => EditProfileCubit(AuthRepository())..getProfile(),
-
       child: BlocListener<EditProfileCubit, EditProfileState>(
         listener: (context, state) {
           if (state is EditProfileLoaded) {
@@ -98,8 +96,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Profile updated successfully')),
             );
-
             Navigator.pop(context);
+          }
+
+          if (state is EditProfilePasswordResetSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Password reset email sent successfully')),
+            );
           }
 
           if (state is EditProfileError) {
@@ -108,7 +111,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ).showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
-
         child: BlocBuilder<EditProfileCubit, EditProfileState>(
           builder: (context, state) {
             if (state is EditProfileLoading) {
@@ -139,7 +141,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 ),
               ),
-
               body: SafeArea(
                 child: Column(
                   children: [
@@ -179,7 +180,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<EditProfileCubit>().resetPassword();
+                        },
                         child: Text(
                           AppTexts.resetPassword.tr(),
                           style: TextStyle(

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/constants/app_colors.dart';
 import 'package:movies_app/core/constants/app_icons.dart';
 import 'package:movies_app/core/constants/app_images.dart';
+import 'package:movies_app/core/constants/app_routes.dart';
 import 'package:movies_app/core/constants/app_texts.dart';
 import 'package:movies_app/core/widgets/custom_button.dart';
 import 'package:movies_app/core/widgets/red_custom_button.dart';
@@ -134,7 +135,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     Expanded(
                                       child: CustomButton(
                                         text: AppTexts.editProfile.tr(),
-                                        onPressed: () {},
+                                        onPressed: () async {
+                                          await Navigator.pushNamed(
+                                            context,
+                                            AppRoutes.editProfile,
+                                          );
+                                          context
+                                              .read<ProfileCubit>()
+                                              .getProfile();
+                                        },
                                       ),
                                     ),
                                     SizedBox(width: 10.w),
@@ -189,31 +198,30 @@ class _ProfileScreenState extends State<ProfileScreen>
                       children: [
                         watchlist.isEmpty
                             ? Center(
-                                child: Image.asset(
-                                  AppImages.empty,
-                                  width: 125.w,
-                                ),
-                              )
+                          child: Image.asset(
+                            AppImages.empty,
+                            width: 125.w,
+                          ),
+                        )
                             : ListView.builder(
-                                itemCount: watchlist.length,
-                                itemBuilder: (context, index) {
-                                  return Text(watchlist[index]);
-                                },
-                              ),
-
+                          itemCount: watchlist.length,
+                          itemBuilder: (context, index) {
+                            return Text(watchlist[index]);
+                          },
+                        ),
                         history.isEmpty
                             ? Center(
-                                child: Image.asset(
-                                  AppImages.empty,
-                                  width: 125.w,
-                                ),
-                              )
+                          child: Image.asset(
+                            AppImages.empty,
+                            width: 125.w,
+                          ),
+                        )
                             : ListView.builder(
-                                itemCount: history.length,
-                                itemBuilder: (context, index) {
-                                  return Text(history[index]);
-                                },
-                              ),
+                          itemCount: history.length,
+                          itemBuilder: (context, index) {
+                            return Text(history[index]);
+                          },
+                        ),
                       ],
                     ),
                   ),

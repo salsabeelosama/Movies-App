@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Roboto',
             scaffoldBackgroundColor: AppColors.backgroundColor,
           ),
-          initialRoute: AppRoutes.editProfile,
+          initialRoute: AppRoutes.register,
           routes: {
             AppRoutes.login: (context) => const LoginScreen(),
             AppRoutes.register: (context) => RegisterScreen(),
