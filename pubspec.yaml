@@ -20,6 +20,7 @@ dependencies:
   google_sign_in: ^7.2.0
   equatable: ^2.1.0
   http: ^1.2.2
+  cloud_firestore: ^6.10.0
 
 dev_dependencies:
   flutter_test:
@@ -30,10 +31,12 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  assets:
-    - assets/images/
-    - assets/icons/
-    - assets/translation/
+assets:
+  - assets/images/
+  - assets/icons/
+  - assets/translation/
+  - assets/Images/
+  - assets/avatar/
 
   fonts:
     - family: DancingScript

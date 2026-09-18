@@ -2,23 +2,22 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/constants/app_colors.dart';
+import 'package:movies_app/core/constants/app_routes.dart';
 import 'package:movies_app/features/Auth/view/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:movies_app/features/Auth/view/register_screen.dart';
+import 'package:movies_app/features/Profile/view/profile_screen.dart';
+import 'package:movies_app/features/edit_profile/view/editProfile_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
     EasyLocalization(
-      supportedLocales: const [
-        Locale('en', 'US'),
-        Locale('ar'),
-      ],
+      supportedLocales: const [Locale('en', 'US'), Locale('ar')],
       path: 'assets/translation',
       fallbackLocale: const Locale('en', 'US'),
       useOnlyLangCode: false,
@@ -47,7 +46,14 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Roboto',
             scaffoldBackgroundColor: AppColors.backgroundColor,
           ),
-          home: const LoginScreen(),
+          initialRoute: AppRoutes.register,
+          routes: {
+            AppRoutes.login: (context) => const LoginScreen(),
+            AppRoutes.register: (context) => RegisterScreen(),
+            AppRoutes.profile: (context) => const ProfileScreen(),
+            AppRoutes.editProfile: (context) =>  EditProfileScreen(),
+            
+          },
         );
       },
     );

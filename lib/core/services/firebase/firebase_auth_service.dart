@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  User? get currentUser => _firebaseAuth.currentUser;
 
   FirebaseAuthService() {
     GoogleSignIn.instance.initialize();
@@ -18,6 +19,19 @@ class FirebaseAuthService {
     );
     return credential.user;
   }
+
+  Future<User?> register({
+  required String email,
+  required String password,
+}) async {
+  final credential =
+      await _firebaseAuth.createUserWithEmailAndPassword(
+    email: email,
+    password: password,
+  );
+
+  return credential.user;
+}
 
   Future<User?> loginWithGoogle() async {
     final GoogleSignInAccount? googleUser =
@@ -38,4 +52,14 @@ class FirebaseAuthService {
   Future<void> sendPasswordResetEmail({required String email}) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
+
+  Future<void> deleteAccount() async {
+  final user = _firebaseAuth.currentUser;
+
+  if (user == null) {
+    throw Exception('No user is logged in');
+  }
+
+  await user.delete();
+}
 }

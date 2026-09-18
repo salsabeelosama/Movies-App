@@ -11,5 +11,17 @@
   "create_one": "Create One",
   "or": "OR",
   "login_with_google": "Login With Google",
-  "verify_email": "Verify Email"
+  "verify_email": "Verify Email",
+"register":"Register",
+"confirm_password":"Confirm Password",
+"name":"Name",
+"phone_number":"Phone Number",
+"create_account":"Create Account",
+"hav_acc":"Already Have Account ?",
+"pick_avatar":"Pick Avatar",
+"reset_password":"Reset Password",
+"delete_account":"Delete Account",
+"update_data":"Update Data"
+
+
 }

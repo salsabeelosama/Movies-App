@@ -12,4 +12,14 @@ class AppTexts {
   static const String or = "or";
   static const String loginWithGoogle = "login_with_google";
   static const String verifyEmail = "verify_email";
+  static const String register = "register";
+  static const String name = "name";
+  static const String confPassword = "confirm_password";
+  static const String phoneNumber = "phone_number";
+  static const String createAccount = "create_account";
+  static const String havAcc = "hav_acc";
+  static const String pickAvatar = "pick_avatar";
+  static const String resetPassword = "reset_password";
+  static const String deleteAccount = "delete_account";
+  static const String updateData = "update_data";
 }
