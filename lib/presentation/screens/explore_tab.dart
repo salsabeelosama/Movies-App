@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/poster_card.dart';
-import '../widgets/min_card.dart';
 
 class ExploreTab extends StatelessWidget {
   const ExploreTab({Key? key}) : super(key: key);
@@ -13,17 +11,17 @@ class ExploreTab extends StatelessWidget {
       {
         'image': 'assets/images/Card (2).png',
         'rating': '7.7',
-        'subtitle': 'TIME IS THE ENEMY'
+        'subtitle': 'TIME IS THE ENEMY',
       },
       {
         'image': 'assets/images/Card (4).png',
         'rating': '7.7',
-        'subtitle': 'CAPTAIN AMERICA'
+        'subtitle': 'CAPTAIN AMERICA',
       },
       {
         'image': 'assets/images/Card (1).png',
         'rating': '7.7',
-        'subtitle': 'THE DARK KNIGHT'
+        'subtitle': 'THE DARK KNIGHT',
       },
     ];
 
@@ -38,10 +36,7 @@ class ExploreTab extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            'assets/images/Card (2).png',
-            fit: BoxFit.cover,
-          ),
+          Image.asset('assets/images/Card (2).png', fit: BoxFit.cover),
           Positioned.fill(
             child: Opacity(
               opacity: 0.4,
@@ -104,7 +99,9 @@ class ExploreTab extends StatelessWidget {
                   ),
                   Center(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
+                      padding: EdgeInsets.symmetric(
+                        vertical: size.height * 0.02,
+                      ),
                       child: const Text(
                         "Watch Now",
                         style: TextStyle(
@@ -117,7 +114,9 @@ class ExploreTab extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.06),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.06,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: const [
@@ -146,13 +145,14 @@ class ExploreTab extends StatelessWidget {
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.symmetric(horizontal: size.width * 0.06),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.06,
+                      ),
                       itemCount: actionMovies.length,
-                      separatorBuilder: (context, index) => const SizedBox(width: 14),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 14),
                       itemBuilder: (context, index) {
-                        return MinCard(
-                          imagePath: actionMovies[index],
-                        );
+                        return MinCard(imagePath: actionMovies[index]);
                       },
                     ),
                   ),
@@ -176,7 +176,10 @@ class ExploreTab extends StatelessWidget {
             _buildNavItem(icon: Icons.home_rounded, isSelected: true),
             _buildNavItem(icon: Icons.search_rounded, isSelected: false),
             _buildNavItem(icon: Icons.grid_view_rounded, isSelected: false),
-            _buildNavItem(icon: Icons.person_outline_rounded, isSelected: false),
+            _buildNavItem(
+              icon: Icons.person_outline_rounded,
+              isSelected: false,
+            ),
           ],
         ),
       ),
@@ -194,6 +197,40 @@ class ExploreTab extends StatelessWidget {
         icon,
         color: isSelected ? Colors.black : Colors.grey,
         size: 24,
+      ),
+    );
+  }
+}
+
+class PosterCard extends StatelessWidget {
+  final String imagePath;
+
+  const PosterCard({Key? key, required this.imagePath}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: AspectRatio(
+        aspectRatio: 2 / 3,
+        child: Image.asset(imagePath, fit: BoxFit.cover),
+      ),
+    );
+  }
+}
+
+class MinCard extends StatelessWidget {
+  final String imagePath;
+
+  const MinCard({Key? key, required this.imagePath}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: AspectRatio(
+        aspectRatio: 2 / 3,
+        child: Image.asset(imagePath, fit: BoxFit.cover),
       ),
     );
   }

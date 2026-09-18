@@ -11,5 +11,12 @@
   "create_one": "أنشئ حساباً",
   "or": "أو",
   "login_with_google": "تسجيل الدخول باستخدام جوجل",
-  "verify_email": "تحقق من البريد الإلكتروني"
+  "verify_email": "تحقق من البريد الإلكتروني",
+  "register": "إنشاء حساب",
+  "confirm_password": "تأكيد كلمة المرور",
+  "name": "الاسم",
+  "phone_number": "رقم الهاتف",
+  "create_account": "إنشاء حساب",
+  "hav_acc": "لديك حساب بالفعل؟"
+
 }
