@@ -6,15 +6,17 @@ class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final IconData? prefixIcon;
   final bool isPassword;
+  final Widget? suffix;
+  final FormFieldValidator<String>? validator;
 
-
-  const CustomTextFormField({
+  CustomTextFormField({
     super.key,
     required this.controller,
     required this.hintText,
     this.prefixIcon,
     this.isPassword = false,
-
+    this.suffix,
+    this.validator,
   });
 
   @override
@@ -26,6 +28,7 @@ class CustomTextFormField extends StatelessWidget {
           width: 392,
           height: 56,
           child: TextFormField(
+            validator: validator,
             controller: controller,
             obscureText: isPassword,
             style: const TextStyle(color: AppColors.whiteColor),
@@ -34,13 +37,17 @@ class CustomTextFormField extends StatelessWidget {
               hintStyle: const TextStyle(color: Colors.white),
               filled: true,
               fillColor: AppColors.subColor,
+              suffixIcon: suffix,
               prefixIcon: prefixIcon != null
                   ? Padding(
-                padding: const EdgeInsets.only(left: 19, right: 4),
-                child: Icon(prefixIcon, color: Colors.white),
-              )
+                      padding: const EdgeInsets.only(left: 19, right: 4),
+                      child: Icon(prefixIcon, color: Colors.white),
+                    )
                   : null,
-              prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+              prefixIconConstraints: const BoxConstraints(
+                minWidth: 0,
+                minHeight: 0,
+              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
