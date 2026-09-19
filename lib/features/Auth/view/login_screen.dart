@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/constants/app_colors.dart';
+import 'package:movies_app/core/constants/app_routes.dart';
 import 'package:movies_app/core/constants/app_texts.dart';
 import 'package:movies_app/core/widgets/custom_text_form_field.dart';
 import 'package:movies_app/core/widgets/custom_button.dart';
@@ -24,6 +25,14 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  bool isPasswordObscured = true;
+
+  void togglePasswordVisibility() {
+    setState(() {
+      isPasswordObscured = !isPasswordObscured;
+    });
+  }
 
   @override
   void dispose() {
@@ -47,18 +56,22 @@ class _LoginScreenState extends State<LoginScreen> {
               child: BlocConsumer<LoginCubit, LoginState>(
                 listener: (context, state) {
                   if (state is LoginFailure) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(state.message)),
-                    );
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(state.message)));
                   }
-                  if (state is LoginSuccess) {}
+                  if (state is LoginSuccess) {
+                    Navigator.pushReplacementNamed(context, AppRoutes.home);
+                  }
                 },
                 builder: (context, state) {
                   final isLoading = state is LoginLoading;
                   return Column(
                     children: [
                       SizedBox(height: 67.h),
-                      Center(child: Image.asset("assets/Images/Login_Icon.png")),
+                      Center(
+                        child: Image.asset("assets/Images/Login_Icon.png"),
+                      ),
                       SizedBox(height: 69.h),
                       CustomTextFormField(
                         controller: emailController,
@@ -69,7 +82,28 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: passwordController,
                         hintText: AppTexts.password.tr(),
                         prefixIcon: Icons.lock,
-                        isPassword: true,
+                        isPassword: isPasswordObscured,
+                        suffix: IconButton(
+                        color: Colors.white,
+                        onPressed: togglePasswordVisibility,
+                        icon: Icon(
+                          isPasswordObscured
+                              ? Icons.visibility_off
+                              : Icons.remove_red_eye_rounded,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return AppTexts.passwordRequired.tr();
+                        }
+
+                        if (value.length < 8) {
+                          return AppTexts.passwordMinLength.tr();
+                        }
+
+                        return null;
+                      },
+                    
                       ),
                       SizedBox(height: 9.h),
                       Align(
@@ -81,7 +115,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const ForgetPasswordScreen(),
+                                  builder: (context) =>
+                                      const ForgetPasswordScreen(),
                                 ),
                               );
                             },
@@ -127,7 +162,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const RegisterScreen(),
+                                      builder: (context) =>
+                                          const RegisterScreen(),
                                     ),
                                   );
                                 },
